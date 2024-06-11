@@ -57,7 +57,8 @@ public class MemberMain {
 		System.out.println("  2. 자료 삭제");
 		System.out.println("  3. 자료 수정");
 		System.out.println("  4. 전체 자료 출력");
-		System.out.println("  5. 작업 끝.");
+		System.out.println("  5. 자료 검색");
+		System.out.println("  6. 작업 끝.");
 		System.out.println("----------------------");
 		System.out.print("원하는 작업 선택 >> ");
 	}
@@ -83,15 +84,76 @@ public class MemberMain {
 				case 4 :  // 전체 자료 출력
 					displayAllMember();
 					break;
-				case 5 :  // 작업 끝
+				case 5 :  // 자료 검색
+					searchMember();
+					break;
+				case 6 :  // 작업 끝
 					System.out.println("작업을 마칩니다.");
 					break;
 				default :
 					System.out.println("번호를 잘못 입력했습니다. 다시입력하세요");
 			}
-		}while(choice!=5);
+		}while(choice!=6);
 	}
 	
+	
+	/*
+	 	검색할 회원 ID, 회원이름, 전화번호, 주솔ㄹ 입력하면
+	 	입력한 정보만 사용하여 검색하는 기능을 구현하시오.
+	 	주소는 입력한 값이 포함만 되어도 검색되도록 한다.
+	 	입력하지 않을 데이터는 엔터키를 통해다음 입력으로 넘긴다.
+	 */
+	/**
+	 * 회원정보 검색을 위한 메서드
+	 */
+	private void searchMember() {
+		scan.nextLine(); //입력버퍼에 남아있는 엔터키 제거용...
+		System.out.println();
+		System.out.println("검색할 정보를 입력하세요.");
+		
+		System.out.println("회원 ID >>");
+		String memId = scan.nextLine().trim(); ///좌우의 불필요한 공백 제거
+		
+		System.out.println("회원 이름 >>");
+		String memName = scan.nextLine().trim(); 
+		
+		System.out.println("회원 전화번호 >>");
+		String memTel = scan.nextLine().trim();
+		
+		System.out.println("회원 주소 >>");
+		String memAddr = scan.nextLine().trim();
+		
+		////////////////////////////////////////////////////
+		
+		MemberVO mv = new MemberVO();
+		mv.setMemId(memId);
+		mv.setMemName(memName);
+		mv.setMemTel(memTel);
+		mv.setMemAddr(memAddr);
+		
+		
+		System.out.println();
+		System.out.println("-----------------------------------------");
+		System.out.println(" ID\t생성일\t이 름\t전화번호\t\t주 소");
+		System.out.println("-----------------------------------------");
+		
+		List<MemberVO> memliList = memService.searchMember(mv);
+		
+		if (memliList.size() == 0) {
+			System.out.println("회원정보가 존재하지 않습니다.");
+		}else {
+			for (MemberVO mv2 : memliList) {
+				
+				System.out.println(mv2.getMemId()+"\t"+mv2.getRegDt()+"\t"+mv2.getMemName()+"\t"
+				+mv2.getMemTel()+"\t"+mv2.getMemAddr());
+			}
+		}
+		System.out.println("-----------------------------------------");
+		System.out.println("출력 끝...");
+		
+		
+	}
+
 	/**
 	 * 모든 회원정보를 출력하기 위한 메서드
 	 */
