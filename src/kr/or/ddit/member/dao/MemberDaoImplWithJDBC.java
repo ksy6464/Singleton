@@ -13,8 +13,13 @@ import kr.or.ddit.member.vo.MemberVO;
 import kr.or.ddit.util.JDBCUtil3;
 
 public class MemberDaoImplWithJDBC implements IMemberDao{
+	///IMemberDao인터페이스에서 정의도니 추상메소드와 동일한 메소드 이름,매개타입, 리턴 타입을 가진 실체 메소들을 갖고 있는 객체를 구현 객체라하고
+	/// 구현 객체를 생성하는 클래스를 구현 클래스라고 한다.
 	
 	// 나 자신의 타입 객체 저장을 위한 객체 변수 선언... (static으로 선언한다)
+	/// 인터페이스로 구현 객체를 사용하려면 인터페이스 변수를 선언하고 구현 객체를 대입해야 한다
+	/// 그러므로 아래와 같은 코드로 쓰면 안된다....
+	// private static MemberDaoImplWithJDBC memDao = new MemberDaoImplWithJDBC();
 	private static IMemberDao memDao = new MemberDaoImplWithJDBC();
 	
 	private Connection conn;
